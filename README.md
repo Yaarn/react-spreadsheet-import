@@ -8,6 +8,8 @@
 </div>
 <br />
 
+This is a fork of react-spreadsheet-import, updated to use React 18.
+
 A component used for importing XLS / XLSX / CSV documents built with [**Chakra UI**](https://chakra-ui.com). Import flow combines:
 
 - 📥 Uploader
@@ -43,9 +45,9 @@ npm i react-spreadsheet-import
 Using the component: (it's up to you when the flow is open and what you do on submit with the imported data)
 
 ```tsx
-import { ReactSpreadsheetImport } from "react-spreadsheet-import";
+import { ReactSpreadsheetImport } from "react-spreadsheet-import"
 
-<ReactSpreadsheetImport isOpen={isOpen} onClose={onClose} onSubmit={onSubmit} fields={fields} />
+;<ReactSpreadsheetImport isOpen={isOpen} onClose={onClose} onSubmit={onSubmit} fields={fields} />
 ```
 
 ## Required Props
@@ -128,11 +130,11 @@ Example:
 
 In rare case when you need to skip the beginning of the flow, you can start the flow from any of the steps.
 
-- **initialStepState** - initial state of component that will be rendered on load. 
+- **initialStepState** - initial state of component that will be rendered on load.
 
 ```tsx
   initialStepState?: StepState
-  
+
   type StepState =
     | {
         type: StepType.upload
@@ -163,9 +165,9 @@ In rare case when you need to skip the beginning of the flow, you can start the 
 Example:
 
 ```tsx
-import { ReactSpreadsheetImport, StepType } from "react-spreadsheet-import";
+import { ReactSpreadsheetImport, StepType } from "react-spreadsheet-import"
 
-<ReactSpreadsheetImport
+;<ReactSpreadsheetImport
   initialStepState={{
     type: StepType.matchColumns,
     data: [
