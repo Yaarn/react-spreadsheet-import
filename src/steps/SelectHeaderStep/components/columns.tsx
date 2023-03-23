@@ -17,6 +17,7 @@ function SelectFormatter(props: FormatterProps<unknown>) {
           row: props.row,
           checked: Boolean(event.target.checked),
           isShiftClick: (event.nativeEvent as MouseEvent).shiftKey,
+          type: "ROW",
         })
       }}
     />

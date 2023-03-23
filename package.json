@@ -1,6 +1,6 @@
 {
-  "name": "react-spreadsheet-import",
-  "version": "2.0.8",
+  "name": "@yaarn/react-spreadsheet-import",
+  "version": "2.0.9",
   "description": "React spreadsheet import for xlsx and csv files with column matching and validation",
   "main": "./dist-commonjs/index.js",
   "module": "./dist/index.js",
@@ -45,19 +45,19 @@
   },
   "homepage": "https://github.com/UgnisSoftware/react-spreadsheet-import#readme",
   "peerDependencies": {
-    "@chakra-ui/react": "^1.8.8",
+    "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "framer-motion": "^4.1.17 || ^6.3.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
   },
   "dependencies": {
     "chakra-react-select": "^3.1.2",
     "chakra-ui-steps": "^1.7.2",
     "js-levenshtein": "^1.1.6",
     "lodash": "^4.17.21",
-    "react-data-grid": "7.0.0-beta.11",
+    "react-data-grid": "7.0.0-beta.27",
     "react-dropzone": "^12.0.5",
     "react-icons": "^4.3.1",
     "uuid": "^8.3.2",
@@ -67,7 +67,7 @@
     "@babel/core": "7.17.9",
     "@emotion/jest": "11.9.1",
     "@jest/types": "27.5.1",
-    "@storybook/react": "6.4.19",
+    "@storybook/react": "6.5.16",
     "@testing-library/dom": "8.11.3",
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "12.1.4",
