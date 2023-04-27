@@ -1,4 +1,4 @@
-const path = require("path")
+const path = require("path");
 
 module.exports = {
   mode: "production",
@@ -29,8 +29,11 @@ module.exports = {
     ],
   },
   resolve: {
+    fallback: {
+      crypto: require.resolve("crypto-browserify"),
+    },
     extensions: [".tsx", ".ts", ".js"],
   },
   target: "node",
   node: false,
-}
+};
