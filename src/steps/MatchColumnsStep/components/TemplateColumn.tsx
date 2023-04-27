@@ -8,46 +8,60 @@ import {
   Box,
   AccordionPanel,
   useStyleConfig,
-} from "@chakra-ui/react"
-import { useRsi } from "../../../hooks/useRsi"
-import type { Column } from "../MatchColumnsStep"
-import { ColumnType } from "../MatchColumnsStep"
-import { MatchIcon } from "./MatchIcon"
-import type { Fields } from "../../../types"
-import type { Translations } from "../../../translationsRSIProps"
-import { MatchColumnSelect } from "../../../components/Selects/MatchColumnSelect"
-import { SubMatchingSelect } from "./SubMatchingSelect"
-import type { Styles } from "./ColumnGrid"
+} from "@chakra-ui/react";
+import { useRsi } from "../../../hooks/useRsi";
+import { Column } from "../MatchColumnsStep";
+import { ColumnType } from "../MatchColumnsStep";
+import { MatchIcon } from "./MatchIcon";
+import { Fields } from "../../../types";
+import { Translations } from "../../../translationsRSIProps";
+import { MatchColumnSelect } from "../../../components/Selects/MatchColumnSelect";
+import { SubMatchingSelect } from "./SubMatchingSelect";
+import { Styles } from "./ColumnGrid";
 
-const getAccordionTitle = <T extends string>(fields: Fields<T>, column: Column<T>, translations: Translations) => {
-  const fieldLabel = fields.find((field) => "value" in column && field.key === column.value)!.label
+const getAccordionTitle = <T extends string>(
+  fields: Fields<T>,
+  column: Column<T>,
+  translations: Translations
+) => {
+  const fieldLabel = fields.find(
+    (field) => "value" in column && field.key === column.value
+  )!.label;
   return `${translations.matchColumnsStep.matchDropdownTitle} ${fieldLabel} (${
     "matchedOptions" in column && column.matchedOptions.length
-  } ${translations.matchColumnsStep.unmatched})`
-}
+  } ${translations.matchColumnsStep.unmatched})`;
+};
 
 type TemplateColumnProps<T extends string> = {
-  onChange: (val: T, index: number) => void
-  onSubChange: (val: T, index: number, option: string) => void
-  column: Column<T>
-}
+  onChange: (val: T, index: number) => void;
+  onSubChange: (val: T, index: number, option: string) => void;
+  column: Column<T>;
+};
 
-export const TemplateColumn = <T extends string>({ column, onChange, onSubChange }: TemplateColumnProps<T>) => {
-  const { translations, fields } = useRsi<T>()
-  const styles = useStyleConfig("MatchColumnsStep") as Styles
-  const isIgnored = column.type === ColumnType.ignored
+export const TemplateColumn = <T extends string>({
+  column,
+  onChange,
+  onSubChange,
+}: TemplateColumnProps<T>) => {
+  const { translations, fields } = useRsi<T>();
+  const styles = useStyleConfig("MatchColumnsStep") as Styles;
+  const isIgnored = column.type === ColumnType.ignored;
   const isChecked =
     column.type === ColumnType.matched ||
     column.type === ColumnType.matchedCheckbox ||
-    column.type === ColumnType.matchedSelectOptions
-  const isSelect = "matchedOptions" in column
-  const selectOptions = fields.map(({ label, key }) => ({ value: key, label }))
-  const selectValue = selectOptions.find(({ value }) => "value" in column && column.value === value)
+    column.type === ColumnType.matchedSelectOptions;
+  const isSelect = "matchedOptions" in column;
+  const selectOptions = fields.map(({ label, key }) => ({ value: key, label }));
+  const selectValue = selectOptions.find(
+    ({ value }) => "value" in column && column.value === value
+  );
 
   return (
     <Flex minH={10} w="100%" flexDir="column" justifyContent="center">
       {isIgnored ? (
-        <Text sx={styles.selectColumn.text}>{translations.matchColumnsStep.ignoredColumnText}</Text>
+        <Text sx={styles.selectColumn.text}>
+          {translations.matchColumnsStep.ignoredColumnText}
+        </Text>
       ) : (
         <>
           <Flex alignItems="center" minH={10} w="100%">
@@ -82,7 +96,12 @@ export const TemplateColumn = <T extends string>({ column, onChange, onSubChange
                   </AccordionButton>
                   <AccordionPanel pb={4} pr={3} display="flex" flexDir="column">
                     {column.matchedOptions.map((option) => (
-                      <SubMatchingSelect option={option} column={column} onSubChange={onSubChange} key={option.entry} />
+                      <SubMatchingSelect
+                        option={option}
+                        column={column}
+                        onSubChange={onSubChange}
+                        key={option.entry}
+                      />
                     ))}
                   </AccordionPanel>
                 </AccordionItem>
@@ -92,5 +111,5 @@ export const TemplateColumn = <T extends string>({ column, onChange, onSubChange
         </>
       )}
     </Flex>
-  )
-}
+  );
+};

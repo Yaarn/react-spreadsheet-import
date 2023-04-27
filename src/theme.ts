@@ -1,11 +1,11 @@
-import { StepsStyleConfig } from "chakra-ui-steps"
-import { darken } from "@chakra-ui/theme-tools"
-import type { CSSObject } from "@chakra-ui/react"
-import type { DeepPartial } from "ts-essentials"
-import type { ChakraStylesConfig } from "chakra-react-select"
-import type { SelectOption } from "./types"
+import { StepsStyleConfig } from "chakra-ui-steps";
+import { darken } from "@chakra-ui/theme-tools";
+import { CSSObject } from "@chakra-ui/react";
+import { DeepPartial } from "ts-essentials";
+import { ChakraStylesConfig } from "chakra-react-select";
+import { SelectOption } from "./types";
 
-type CSSObjectWithActiveStep = CSSObject & { _activeStep: CSSObject }
+type CSSObjectWithActiveStep = CSSObject & { _activeStep: CSSObject };
 
 const StepsTheme: typeof StepsStyleConfig = {
   ...StepsStyleConfig,
@@ -25,13 +25,16 @@ const StepsTheme: typeof StepsStyleConfig = {
         bg: "background",
         borderColor: "background",
         _activeStep: {
-          ...(StepsStyleConfig.baseStyle(props).stepIconContainer! as CSSObjectWithActiveStep)._activeStep,
+          ...(
+            StepsStyleConfig.baseStyle(props)
+              .stepIconContainer! as CSSObjectWithActiveStep
+          )._activeStep,
           bg: darken("background", 0.5),
         },
       },
-    }
+    };
   },
-}
+};
 
 const MatchIconTheme: any = {
   baseStyle: (props: any) => {
@@ -42,13 +45,13 @@ const MatchIconTheme: any = {
       borderColor: "yellow.500",
       color: "background",
       transitionDuration: "ultra-fast",
-    }
+    };
   },
   defaultProps: {
     size: "md",
     colorScheme: "green",
   },
-}
+};
 
 export const themeOverrides = {
   colors: {
@@ -324,7 +327,10 @@ export const themeOverrides = {
           option: (provided, state) => ({
             ...provided,
             color: state.isSelected ? "gray.900" : provided.color,
-            bg: state.isSelected || state.isFocused ? "secondaryBackground" : provided.bg,
+            bg:
+              state.isSelected || state.isFocused
+                ? "secondaryBackground"
+                : provided.bg,
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "block",
@@ -490,7 +496,7 @@ export const themeOverrides = {
       },
     },
   },
-} as const
+} as const;
 
 export const rtlThemeSupport = {
   components: {
@@ -502,6 +508,6 @@ export const rtlThemeSupport = {
       },
     },
   },
-} as const
+} as const;
 
-export type CustomTheme = DeepPartial<typeof themeOverrides>
+export type CustomTheme = DeepPartial<typeof themeOverrides>;

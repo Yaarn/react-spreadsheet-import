@@ -1,16 +1,16 @@
-import type React from "react"
-import { Modal, ModalContent, ModalOverlay } from "@chakra-ui/react"
-import { ModalCloseButton } from "./ModalCloseButton"
-import { useRsi } from "../hooks/useRsi"
+import React from "react";
+import { Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
+import { ModalCloseButton } from "./ModalCloseButton";
+import { useRsi } from "../hooks/useRsi";
 
 type Props = {
-  children: React.ReactNode
-  isOpen: boolean
-  onClose: () => void
-}
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+};
 
 export const ModalWrapper = ({ children, isOpen, onClose }: Props) => {
-  const { rtl } = useRsi()
+  const { rtl } = useRsi();
   return (
     <Modal
       isOpen={isOpen}
@@ -27,5 +27,5 @@ export const ModalWrapper = ({ children, isOpen, onClose }: Props) => {
         <ModalContent>{children}</ModalContent>
       </div>
     </Modal>
-  )
-}
+  );
+};

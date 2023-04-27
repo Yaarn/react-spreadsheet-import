@@ -1,5 +1,5 @@
-import type { RsiProps } from "../types"
-import { defaultRSIProps } from "../ReactSpreadsheetImport"
+import { RsiProps } from "../types";
+import { defaultRSIProps } from "../ReactSpreadsheetImport";
 
 const fields = [
   {
@@ -80,15 +80,16 @@ const fields = [
     },
     example: "true",
   },
-] as const
+] as const;
 
-const mockComponentBehaviourForTypes = <T extends string>(props: RsiProps<T>) => props
+const mockComponentBehaviourForTypes = <T extends string>(props: RsiProps<T>) =>
+  props;
 
 export const mockRsiValues = mockComponentBehaviourForTypes({
   ...defaultRSIProps,
   fields: fields,
   onSubmit: (data) => {
-    console.log(data.all.map((value) => value))
+    console.log(data.all.map((value) => value));
   },
   isOpen: true,
   onClose: () => {},
@@ -121,7 +122,7 @@ export const mockRsiValues = mockComponentBehaviourForTypes({
   //   })
   //   return data
   // },
-})
+});
 
 export const editableTableInitialData = [
   {
@@ -152,11 +153,11 @@ export const editableTableInitialData = [
     team: "two",
     is_manager: true,
   },
-]
+];
 
 export const headerSelectionTableFields = [
   ["text", "num", "select", "bool"],
   ["Hello", "123", "one", "true"],
   ["Hello", "123", "one", "true"],
   ["Hello", "123", "one", "true"],
-]
+];

@@ -1,19 +1,21 @@
-import { Column, useRowSelection } from "react-data-grid"
-import { Box, Checkbox, Input, Switch, Tooltip } from "@chakra-ui/react"
-import type { Data, Fields } from "../../../types"
-import type { ChangeEvent } from "react"
-import type { Meta } from "../types"
-import { CgInfo } from "react-icons/cg"
-import { TableSelect } from "../../../components/Selects/TableSelect"
+import { Column, useRowSelection } from "react-data-grid";
+import { Box, Checkbox, Input, Switch, Tooltip } from "@chakra-ui/react";
+import { Data, Fields } from "../../../types";
+import { ChangeEvent } from "react";
+import { Meta } from "../types";
+import { CgInfo } from "react-icons/cg";
+import { TableSelect } from "../../../components/Selects/TableSelect";
 
-const SELECT_COLUMN_KEY = "select-row"
+const SELECT_COLUMN_KEY = "select-row";
 
 function autoFocusAndSelect(input: HTMLInputElement | null) {
-  input?.focus()
-  input?.select()
+  input?.focus();
+  input?.select();
 }
 
-export const generateColumns = <T extends string>(fields: Fields<T>): Column<Data<T> & Meta>[] => [
+export const generateColumns = <T extends string>(
+  fields: Fields<T>
+): Column<Data<T> & Meta>[] => [
   {
     key: SELECT_COLUMN_KEY,
     name: "",
@@ -25,7 +27,7 @@ export const generateColumns = <T extends string>(fields: Fields<T>): Column<Dat
     cellClass: "rdg-checkbox",
     formatter: (props) => {
       // eslint-disable-next-line  react-hooks/rules-of-hooks
-      const [isRowSelected, onRowSelectionChange] = useRowSelection()
+      const [isRowSelected, onRowSelectionChange] = useRowSelection();
       return (
         <Checkbox
           bg="white"
@@ -37,10 +39,10 @@ export const generateColumns = <T extends string>(fields: Fields<T>): Column<Dat
               checked: Boolean(event.target.checked),
               isShiftClick: (event.nativeEvent as MouseEvent).shiftKey,
               type: "ROW",
-            })
+            });
           }}
         />
-      )
+      );
     },
   },
   ...fields.map(
@@ -65,20 +67,22 @@ export const generateColumns = <T extends string>(fields: Fields<T>): Column<Dat
       ),
       editable: column.fieldType.type !== "checkbox",
       editor: ({ row, onRowChange, onClose }) => {
-        let component
+        let component;
 
         switch (column.fieldType.type) {
           case "select":
             component = (
               <TableSelect
-                value={column.fieldType.options.find((option) => option.value === (row[column.key] as string))}
+                value={column.fieldType.options.find(
+                  (option) => option.value === (row[column.key] as string)
+                )}
                 onChange={(value) => {
-                  onRowChange({ ...row, [column.key]: value?.value }, true)
+                  onRowChange({ ...row, [column.key]: value?.value }, true);
                 }}
                 options={column.fieldType.options}
               />
-            )
-            break
+            );
+            break;
           default:
             component = (
               <Box paddingInlineStart="0.5rem">
@@ -89,18 +93,18 @@ export const generateColumns = <T extends string>(fields: Fields<T>): Column<Dat
                   size="small"
                   value={row[column.key] as string}
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    onRowChange({ ...row, [column.key]: event.target.value })
+                    onRowChange({ ...row, [column.key]: event.target.value });
                   }}
                   onBlur={() => onClose(true)}
                 />
               </Box>
-            )
+            );
         }
 
-        return component
+        return component;
       },
       formatter: ({ row, onRowChange }) => {
-        let component
+        let component;
 
         switch (column.fieldType.type) {
           case "checkbox":
@@ -110,55 +114,74 @@ export const generateColumns = <T extends string>(fields: Fields<T>): Column<Dat
                 alignItems="center"
                 height="100%"
                 onClick={(event) => {
-                  event.stopPropagation()
+                  event.stopPropagation();
                 }}
               >
                 <Switch
                   isChecked={row[column.key] as boolean}
                   onChange={() => {
-                    onRowChange({ ...row, [column.key]: !row[column.key as T] })
+                    onRowChange({
+                      ...row,
+                      [column.key]: !row[column.key as T],
+                    });
                   }}
                 />
               </Box>
-            )
-            break
+            );
+            break;
           case "select":
             component = (
-              <Box minWidth="100%" minHeight="100%" overflow="hidden" textOverflow="ellipsis">
-                {column.fieldType.options.find((option) => option.value === row[column.key as T])?.label || null}
+              <Box
+                minWidth="100%"
+                minHeight="100%"
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                {column.fieldType.options.find(
+                  (option) => option.value === row[column.key as T]
+                )?.label || null}
               </Box>
-            )
-            break
+            );
+            break;
           default:
             component = (
-              <Box minWidth="100%" minHeight="100%" overflow="hidden" textOverflow="ellipsis">
+              <Box
+                minWidth="100%"
+                minHeight="100%"
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
                 {row[column.key as T]}
               </Box>
-            )
+            );
         }
 
         if (row.__errors?.[column.key]) {
           return (
-            <Tooltip placement="top" hasArrow label={row.__errors?.[column.key]?.message}>
+            <Tooltip
+              placement="top"
+              hasArrow
+              label={row.__errors?.[column.key]?.message}
+            >
               {component}
             </Tooltip>
-          )
+          );
         }
 
-        return component
+        return component;
       },
       cellClass: (row: Meta) => {
         switch (row.__errors?.[column.key]?.level) {
           case "error":
-            return "rdg-cell-error"
+            return "rdg-cell-error";
           case "warning":
-            return "rdg-cell-warning"
+            return "rdg-cell-warning";
           case "info":
-            return "rdg-cell-info"
+            return "rdg-cell-info";
           default:
-            return ""
+            return "";
         }
       },
-    }),
+    })
   ),
-]
+];

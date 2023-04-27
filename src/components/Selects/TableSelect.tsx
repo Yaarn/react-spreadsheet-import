@@ -1,17 +1,19 @@
-import { rootId } from "../Providers"
-import { Select } from "chakra-react-select"
-import type { SelectOption } from "../../types"
-import { useStyleConfig } from "@chakra-ui/react"
-import type { themeOverrides } from "../../theme"
+import { rootId } from "../Providers";
+import { Select } from "chakra-react-select";
+import { SelectOption } from "../../types";
+import { useStyleConfig } from "@chakra-ui/react";
+import { themeOverrides } from "../../theme";
 
 interface Props {
-  onChange: (value: SelectOption | null) => void
-  value?: SelectOption
-  options: readonly SelectOption[]
+  onChange: (value: SelectOption | null) => void;
+  value?: SelectOption;
+  options: readonly SelectOption[];
 }
 
 export const TableSelect = ({ onChange, value, options }: Props) => {
-  const styles = useStyleConfig("ValidationStep") as typeof themeOverrides["components"]["ValidationStep"]["baseStyle"]
+  const styles = useStyleConfig(
+    "ValidationStep"
+  ) as typeof themeOverrides["components"]["ValidationStep"]["baseStyle"];
   return (
     <Select<SelectOption, false>
       autoFocus
@@ -26,5 +28,5 @@ export const TableSelect = ({ onChange, value, options }: Props) => {
       options={options}
       chakraStyles={styles.select}
     />
-  )
-}
+  );
+};

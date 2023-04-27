@@ -1,27 +1,29 @@
-import { Box, Flex, IconButton, Text, useStyleConfig } from "@chakra-ui/react"
-import { CgClose, CgUndo } from "react-icons/cg"
-import type { Column } from "../MatchColumnsStep"
-import { ColumnType } from "../MatchColumnsStep"
-import { dataAttr } from "@chakra-ui/utils"
-import type { Styles } from "./ColumnGrid"
-import type { RawData } from "../../../types"
+import { Box, Flex, IconButton, Text, useStyleConfig } from "@chakra-ui/react";
+import { CgClose, CgUndo } from "react-icons/cg";
+import { Column } from "../MatchColumnsStep";
+import { ColumnType } from "../MatchColumnsStep";
+import { dataAttr } from "@chakra-ui/utils";
+import { Styles } from "./ColumnGrid";
+import { RawData } from "../../../types";
 
 type UserTableColumnProps<T extends string> = {
-  column: Column<T>
-  entries: RawData
-  onIgnore: (index: number) => void
-  onRevertIgnore: (index: number) => void
-}
+  column: Column<T>;
+  entries: RawData;
+  onIgnore: (index: number) => void;
+  onRevertIgnore: (index: number) => void;
+};
 
-export const UserTableColumn = <T extends string>(props: UserTableColumnProps<T>) => {
-  const styles = useStyleConfig("MatchColumnsStep") as Styles
+export const UserTableColumn = <T extends string>(
+  props: UserTableColumnProps<T>
+) => {
+  const styles = useStyleConfig("MatchColumnsStep") as Styles;
   const {
     column: { header, index, type },
     entries,
     onIgnore,
     onRevertIgnore,
-  } = props
-  const isIgnored = type === ColumnType.ignored
+  } = props;
+  const isIgnored = type === ColumnType.ignored;
   return (
     <Box>
       <Flex px={6} justifyContent="space-between" alignItems="center" mb={4}>
@@ -45,10 +47,14 @@ export const UserTableColumn = <T extends string>(props: UserTableColumnProps<T>
         )}
       </Flex>
       {entries.map((entry, index) => (
-        <Text key={(entry || "") + index} sx={styles.userTable.cell} data-ignored={dataAttr(isIgnored)}>
+        <Text
+          key={(entry || "") + index}
+          sx={styles.userTable.cell}
+          data-ignored={dataAttr(isIgnored)}
+        >
           {entry}
         </Text>
       ))}
     </Box>
-  )
-}
+  );
+};

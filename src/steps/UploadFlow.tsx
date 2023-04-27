@@ -1,15 +1,15 @@
-import { useCallback, useState } from "react"
-import { Progress, useToast } from "@chakra-ui/react"
-import type XLSX from "xlsx"
-import { UploadStep } from "./UploadStep/UploadStep"
-import { SelectHeaderStep } from "./SelectHeaderStep/SelectHeaderStep"
-import { SelectSheetStep } from "./SelectSheetStep/SelectSheetStep"
-import { mapWorkbook } from "../utils/mapWorkbook"
-import { ValidationStep } from "./ValidationStep/ValidationStep"
-import { MatchColumnsStep } from "./MatchColumnsStep/MatchColumnsStep"
-import { exceedsMaxRecords } from "../utils/exceedsMaxRecords"
-import { useRsi } from "../hooks/useRsi"
-import type { RawData } from "../types"
+import { useCallback, useState } from "react";
+import { Progress, useToast } from "@chakra-ui/react";
+import XLSX from "xlsx";
+import { UploadStep } from "./UploadStep/UploadStep";
+import { SelectHeaderStep } from "./SelectHeaderStep/SelectHeaderStep";
+import { SelectSheetStep } from "./SelectSheetStep/SelectSheetStep";
+import { mapWorkbook } from "../utils/mapWorkbook";
+import { ValidationStep } from "./ValidationStep/ValidationStep";
+import { MatchColumnsStep } from "./MatchColumnsStep/MatchColumnsStep";
+import { exceedsMaxRecords } from "../utils/exceedsMaxRecords";
+import { useRsi } from "../hooks/useRsi";
+import { RawData } from "../types";
 
 export enum StepType {
   upload = "upload",
@@ -20,35 +20,43 @@ export enum StepType {
 }
 export type StepState =
   | {
-      type: StepType.upload
+      type: StepType.upload;
     }
   | {
-      type: StepType.selectSheet
-      workbook: XLSX.WorkBook
+      type: StepType.selectSheet;
+      workbook: XLSX.WorkBook;
     }
   | {
-      type: StepType.selectHeader
-      data: RawData[]
+      type: StepType.selectHeader;
+      data: RawData[];
     }
   | {
-      type: StepType.matchColumns
-      data: RawData[]
-      headerValues: RawData
+      type: StepType.matchColumns;
+      data: RawData[];
+      headerValues: RawData;
     }
   | {
-      type: StepType.validateData
-      data: any[]
-    }
+      type: StepType.validateData;
+      data: any[];
+    };
 
 interface Props {
-  nextStep: () => void
+  nextStep: () => void;
 }
 
 export const UploadFlow = ({ nextStep }: Props) => {
-  const { initialStepState } = useRsi()
-  const [state, setState] = useState<StepState>(initialStepState || { type: StepType.upload })
-  const { maxRecords, translations, uploadStepHook, selectHeaderStepHook, matchColumnsStepHook } = useRsi()
-  const toast = useToast()
+  const { initialStepState } = useRsi();
+  const [state, setState] = useState<StepState>(
+    initialStepState || { type: StepType.upload }
+  );
+  const {
+    maxRecords,
+    translations,
+    uploadStepHook,
+    selectHeaderStepHook,
+    matchColumnsStepHook,
+  } = useRsi();
+  const toast = useToast();
   const errorToast = useCallback(
     (description: string) => {
       toast({
@@ -58,79 +66,102 @@ export const UploadFlow = ({ nextStep }: Props) => {
         title: `${translations.alerts.toast.error}`,
         description,
         isClosable: true,
-      })
+      });
     },
-    [toast, translations],
-  )
+    [toast, translations]
+  );
 
   switch (state.type) {
     case StepType.upload:
       return (
         <UploadStep
           onContinue={async (workbook) => {
-            const isSingleSheet = workbook.SheetNames.length === 1
+            const isSingleSheet = workbook.SheetNames.length === 1;
             if (isSingleSheet) {
-              if (maxRecords && exceedsMaxRecords(workbook.Sheets[workbook.SheetNames[0]], maxRecords)) {
-                errorToast(translations.uploadStep.maxRecordsExceeded(maxRecords.toString()))
-                return
+              if (
+                maxRecords &&
+                exceedsMaxRecords(
+                  workbook.Sheets[workbook.SheetNames[0]],
+                  maxRecords
+                )
+              ) {
+                errorToast(
+                  translations.uploadStep.maxRecordsExceeded(
+                    maxRecords.toString()
+                  )
+                );
+                return;
               }
               try {
-                const mappedWorkbook = await uploadStepHook(mapWorkbook(workbook))
+                const mappedWorkbook = await uploadStepHook(
+                  mapWorkbook(workbook)
+                );
                 setState({
                   type: StepType.selectHeader,
                   data: mappedWorkbook,
-                })
-                nextStep()
+                });
+                nextStep();
               } catch (e) {
-                errorToast((e as Error).message)
+                errorToast((e as Error).message);
               }
             } else {
-              setState({ type: StepType.selectSheet, workbook })
+              setState({ type: StepType.selectSheet, workbook });
             }
           }}
         />
-      )
+      );
     case StepType.selectSheet:
       return (
         <SelectSheetStep
           sheetNames={state.workbook.SheetNames}
           onContinue={async (sheetName) => {
-            if (maxRecords && exceedsMaxRecords(state.workbook.Sheets[sheetName], maxRecords)) {
-              errorToast(translations.uploadStep.maxRecordsExceeded(maxRecords.toString()))
-              return
+            if (
+              maxRecords &&
+              exceedsMaxRecords(state.workbook.Sheets[sheetName], maxRecords)
+            ) {
+              errorToast(
+                translations.uploadStep.maxRecordsExceeded(
+                  maxRecords.toString()
+                )
+              );
+              return;
             }
             try {
-              const mappedWorkbook = await uploadStepHook(mapWorkbook(state.workbook, sheetName))
+              const mappedWorkbook = await uploadStepHook(
+                mapWorkbook(state.workbook, sheetName)
+              );
               setState({
                 type: StepType.selectHeader,
                 data: mappedWorkbook,
-              })
-              nextStep()
+              });
+              nextStep();
             } catch (e) {
-              errorToast((e as Error).message)
+              errorToast((e as Error).message);
             }
           }}
         />
-      )
+      );
     case StepType.selectHeader:
       return (
         <SelectHeaderStep
           data={state.data}
           onContinue={async (...args) => {
             try {
-              const { data, headerValues } = await selectHeaderStepHook(...args)
+              const { data, headerValues } = await selectHeaderStepHook(
+                ...args
+              );
               setState({
                 type: StepType.matchColumns,
                 data,
                 headerValues,
-              })
-              nextStep()
+              });
+              nextStep();
             } catch (e) {
-              errorToast((e as Error).message)
+              errorToast((e as Error).message);
             }
           }}
         />
-      )
+      );
     case StepType.matchColumns:
       return (
         <MatchColumnsStep
@@ -138,21 +169,21 @@ export const UploadFlow = ({ nextStep }: Props) => {
           headerValues={state.headerValues}
           onContinue={async (values, rawData, columns) => {
             try {
-              const data = await matchColumnsStepHook(values, rawData, columns)
+              const data = await matchColumnsStepHook(values, rawData, columns);
               setState({
                 type: StepType.validateData,
                 data,
-              })
-              nextStep()
+              });
+              nextStep();
             } catch (e) {
-              errorToast((e as Error).message)
+              errorToast((e as Error).message);
             }
           }}
         />
-      )
+      );
     case StepType.validateData:
-      return <ValidationStep initialData={state.data} />
+      return <ValidationStep initialData={state.data} />;
     default:
-      return <Progress isIndeterminate />
+      return <Progress isIndeterminate />;
   }
-}
+};

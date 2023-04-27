@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { RsiContext } from "../components/Providers";
-import type { RsiProps } from "../types";
-import type { MarkRequired } from "ts-essentials";
-import type { defaultRSIProps } from "../ReactSpreadsheetImport";
-import type { Translations } from "../translationsRSIProps";
+import { RsiProps } from "../types";
+import { MarkRequired } from "ts-essentials";
+import { defaultRSIProps } from "../ReactSpreadsheetImport";
+import { Translations } from "../translationsRSIProps";
 
 export const useRsi = <T extends string>() =>
   useContext<

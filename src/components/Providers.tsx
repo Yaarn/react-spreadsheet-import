@@ -1,7 +1,7 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { createContext } from "react";
-import type { RsiProps } from "../types";
-import type { CustomTheme } from "../theme";
+import { RsiProps } from "../types";
+import { CustomTheme } from "../theme";
 
 export const RsiContext = createContext({} as any);
 

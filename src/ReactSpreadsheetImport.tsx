@@ -3,7 +3,7 @@ import merge from "lodash/merge";
 import { Steps } from "./steps/Steps";
 import { rtlThemeSupport, themeOverrides } from "./theme";
 import { Providers } from "./components/Providers";
-import type { RsiProps } from "./types";
+import { RsiProps } from "./types";
 import { ModalWrapper } from "./components/ModalWrapper";
 import { translations } from "./translationsRSIProps";
 

@@ -1,11 +1,11 @@
-import { Column, FormatterProps, useRowSelection } from "react-data-grid"
-import { Radio } from "@chakra-ui/react"
-import type { RawData } from "../../../types"
+import { Column, FormatterProps, useRowSelection } from "react-data-grid";
+import { Radio } from "@chakra-ui/react";
+import { RawData } from "../../../types";
 
-const SELECT_COLUMN_KEY = "select-row"
+const SELECT_COLUMN_KEY = "select-row";
 
 function SelectFormatter(props: FormatterProps<unknown>) {
-  const [isRowSelected, onRowSelectionChange] = useRowSelection()
+  const [isRowSelected, onRowSelectionChange] = useRowSelection();
 
   return (
     <Radio
@@ -18,10 +18,10 @@ function SelectFormatter(props: FormatterProps<unknown>) {
           checked: Boolean(event.target.checked),
           isShiftClick: (event.nativeEvent as MouseEvent).shiftKey,
           type: "ROW",
-        })
+        });
       }}
     />
-  )
+  );
 }
 
 export const SelectColumn: Column<any, any> = {
@@ -34,15 +34,18 @@ export const SelectColumn: Column<any, any> = {
   frozen: true,
   cellClass: "rdg-radio",
   formatter: SelectFormatter,
-}
+};
 
 export const generateSelectionColumns = (data: RawData[]) => {
-  const longestRowLength = data.reduce((acc, curr) => (acc > curr.length ? acc : curr.length), 0)
+  const longestRowLength = data.reduce(
+    (acc, curr) => (acc > curr.length ? acc : curr.length),
+    0
+  );
   return [
     SelectColumn,
     ...Array.from(Array(longestRowLength), (_, index) => ({
       key: index.toString(),
       name: "",
     })),
-  ]
-}
+  ];
+};

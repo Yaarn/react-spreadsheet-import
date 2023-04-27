@@ -1,7 +1,7 @@
-import type { Column } from "react-data-grid"
-import { Box, Tooltip } from "@chakra-ui/react"
-import type { Fields } from "../../../types"
-import { CgInfo } from "react-icons/cg"
+import { Column } from "react-data-grid";
+import { Box, Tooltip } from "@chakra-ui/react";
+import { Fields } from "../../../types";
+import { CgInfo } from "react-icons/cg";
 
 export const generateColumns = <T extends string>(fields: Fields<T>) =>
   fields.map(
@@ -24,9 +24,14 @@ export const generateColumns = <T extends string>(fields: Fields<T>) =>
         </Box>
       ),
       formatter: ({ row }) => (
-        <Box minWidth="100%" minHeight="100%" overflow="hidden" textOverflow="ellipsis">
+        <Box
+          minWidth="100%"
+          minHeight="100%"
+          overflow="hidden"
+          textOverflow="ellipsis"
+        >
           {row[column.key]}
         </Box>
       ),
-    }),
-  )
+    })
+  );

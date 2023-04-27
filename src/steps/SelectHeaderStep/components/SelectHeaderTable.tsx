@@ -1,16 +1,20 @@
-import { useMemo } from "react"
-import { Table } from "../../../components/Table"
-import { generateSelectionColumns } from "./columns"
-import type { RawData } from "../../../types"
+import { useMemo } from "react";
+import { Table } from "../../../components/Table";
+import { generateSelectionColumns } from "./columns";
+import { RawData } from "../../../types";
 
 interface Props {
-  data: RawData[]
-  selectedRows: ReadonlySet<number>
-  setSelectedRows: (rows: ReadonlySet<number>) => void
+  data: RawData[];
+  selectedRows: ReadonlySet<number>;
+  setSelectedRows: (rows: ReadonlySet<number>) => void;
 }
 
-export const SelectHeaderTable = ({ data, selectedRows, setSelectedRows }: Props) => {
-  const columns = useMemo(() => generateSelectionColumns(data), [data])
+export const SelectHeaderTable = ({
+  data,
+  selectedRows,
+  setSelectedRows,
+}: Props) => {
+  const columns = useMemo(() => generateSelectionColumns(data), [data]);
 
   return (
     <Table
@@ -22,16 +26,16 @@ export const SelectHeaderTable = ({ data, selectedRows, setSelectedRows }: Props
         // allow selecting only one row
         newRows.forEach((value) => {
           if (!selectedRows.has(value as number)) {
-            setSelectedRows(new Set([value as number]))
-            return
+            setSelectedRows(new Set([value as number]));
+            return;
           }
-        })
+        });
       }}
       onCellClick={(args) => {
-        setSelectedRows(new Set([data.indexOf(args.row)]))
+        setSelectedRows(new Set([data.indexOf(args.row)]));
       }}
       headerRowHeight={0}
       className="rdg-static"
     />
-  )
-}
+  );
+};

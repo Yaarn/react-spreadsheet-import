@@ -1,11 +1,13 @@
-import type { DeepPartial } from "ts-essentials"
+import { DeepPartial } from "ts-essentials";
 
 export const translations = {
   uploadStep: {
     title: "Upload file",
     manifestTitle: "Data that we expect:",
-    manifestDescription: "(You will have a chance to rename or remove columns in next steps)",
-    maxRecordsExceeded: (maxRecords: string) => `Too many records. Up to ${maxRecords} allowed`,
+    manifestDescription:
+      "(You will have a chance to rename or remove columns in next steps)",
+    maxRecordsExceeded: (maxRecords: string) =>
+      `Too many records. Up to ${maxRecords} allowed`,
     dropzone: {
       title: "Upload .xlsx, .xls or .csv file",
       errorToastDescription: "upload rejected",
@@ -52,14 +54,16 @@ export const translations = {
     },
     submitIncomplete: {
       headerTitle: "Errors detected",
-      bodyText: "There are still some rows that contain errors. Rows with errors will be ignored when submitting.",
+      bodyText:
+        "There are still some rows that contain errors. Rows with errors will be ignored when submitting.",
       bodyTextSubmitForbidden: "There are still some rows containing errors.",
       cancelButtonTitle: "Cancel",
       finishButtonTitle: "Submit",
     },
     unmatchedRequiredFields: {
       headerTitle: "Not all columns matched",
-      bodyText: "There are required columns that are not matched or ignored. Do you want to continue?",
+      bodyText:
+        "There are required columns that are not matched or ignored. Do you want to continue?",
       listTitle: "Columns not matched:",
       cancelButtonTitle: "Cancel",
       continueButtonTitle: "Continue",
@@ -68,7 +72,7 @@ export const translations = {
       error: "Error",
     },
   },
-}
+};
 
-export type TranslationsRSIProps = DeepPartial<typeof translations>
-export type Translations = typeof translations
+export type TranslationsRSIProps = DeepPartial<typeof translations>;
+export type Translations = typeof translations;
