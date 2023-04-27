@@ -5,9 +5,6 @@
   "main": "src/index.ts",
   "module": "src/index.ts",
   "types": "index.d.ts",
-  "files": [
-    "src"
-  ],
   "scripts": {
     "test": "jest",
     "ts": "tsc",
